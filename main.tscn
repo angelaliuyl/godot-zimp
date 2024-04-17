@@ -13,7 +13,7 @@ tile_scene = ExtResource("1_6fcyy")
 [node name="HUD" parent="." instance=ExtResource("2_624k5")]
 
 [node name="StartingTileMarker" type="Marker2D" parent="."]
-position = Vector2(422, 534)
+position = Vector2(476, 552)
 
 [node name="NewTileMarker" type="Marker2D" parent="."]
 position = Vector2(993, 261)
