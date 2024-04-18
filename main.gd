@@ -1,9 +1,18 @@
 extends Node2D
 @export var tile_scene: PackedScene
 
+#section for storing room tile logic
+var indoor_deck = ["bathroom", "bedroom", "diningroom", "eviltemple", 
+					"familyroom", "kitchen", "storage"]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$StartingTile.start($StartingTileMarker.position)
+	$StartingTile.load_texture("foyer")
+	
+	# randomise indoor_deck
+	indoor_deck.shuffle()
+	print(indoor_deck)
 	
 
 
@@ -14,4 +23,6 @@ func _process(delta):
 func generate_indoor_tile():
 	var indoor_tile = tile_scene.instantiate()
 	indoor_tile.position = $NewTileMarker.position
+	indoor_tile.load_texture(indoor_deck.pop_front())
 	add_child(indoor_tile)
+

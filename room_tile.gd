@@ -5,10 +5,18 @@ var offset = Vector2.ZERO
 var collision = false
 var right_area_entered = false
 
+var room_name_array = ["bathroom", "bedroom", "diningroom", "eviltemple", 
+					"familyroom", "foyer", "kitchen", "storage"]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	pass
+		
+func load_texture(room_name : String):
+	var path = "res://media/tiles/" + room_name + ".png"
+	var tile_image = Image.load_from_file(path)
+	var image_texture = ImageTexture.create_from_image(tile_image)
+	$TileSprite.texture = image_texture
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -40,5 +48,6 @@ func _on_button_button_down():
 
 func _on_button_button_up():
 	dragging = false
+	
 
 
