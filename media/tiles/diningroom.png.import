@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l8lokh3bjwu4"
-path="res://.godot/imported/foyer.jpg-64a8778b2d3a20edda6e6961657db331.ctex"
+uid="uid://daii0ot1gdr0d"
+path="res://.godot/imported/diningroom.png-cd5b9b8bd0dfb2317549c0f9ac040f89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/tiles/foyer.jpg"
-dest_files=["res://.godot/imported/foyer.jpg-64a8778b2d3a20edda6e6961657db331.ctex"]
+source_file="res://media/tiles/diningroom.png"
+dest_files=["res://.godot/imported/diningroom.png-cd5b9b8bd0dfb2317549c0f9ac040f89.ctex"]
 
 [params]
 
