@@ -9,6 +9,7 @@ var indoor_deck = ["bathroom", "bedroom", "diningroom", "eviltemple",
 func _ready():
 	$StartingTile.start($StartingTileMarker.position)
 	$StartingTile.load_texture("foyer")
+	$StartingTile.placed = true
 	
 	# randomise indoor_deck
 	indoor_deck.shuffle()
@@ -25,4 +26,11 @@ func generate_indoor_tile():
 	indoor_tile.position = $NewTileMarker.position
 	indoor_tile.load_texture(indoor_deck.pop_front())
 	add_child(indoor_tile)
+	if indoor_deck.size() > 0:
+		var indoor_tile = tile_scene.instantiate()
+		indoor_tile.position = $NewTileMarker.position
+		indoor_tile.load_texture(indoor_deck.pop_front())
+		add_child(indoor_tile)
+	else:
+		print("no indoor tiles left")
 
