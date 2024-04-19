@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://by51q8407v5jq"]
+[gd_scene load_steps=6 format=3 uid="uid://by51q8407v5jq"]
 
 [ext_resource type="Texture2D" uid="uid://1e2327r8gxeg" path="res://media/tiles/foyer.png" id="1_3enom"]
 [ext_resource type="Script" path="res://room_tile.gd" id="1_hlr76"]
 [ext_resource type="PackedScene" uid="uid://ng27ba3o2qm" path="res://tile_ui.tscn" id="3_ikb75"]
+[ext_resource type="PackedScene" uid="uid://2royat4fb2n2" path="res://tile_snapping_area.tscn" id="4_ubyep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8knk0"]
 size = Vector2(149, 148)
@@ -11,10 +12,8 @@ size = Vector2(149, 148)
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_hlr76")
-
-[node name="TileSprite" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_3enom")
+tile_placement_scene = ExtResource("4_ubyep")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8knk0")
@@ -29,6 +28,22 @@ offset_bottom = -41.0
 scale = Vector2(3.12, 4.68)
 
 [node name="TileUI" parent="." instance=ExtResource("3_ikb75")]
+
+[node name="TileSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_3enom")
+
+[node name="RightSnapCenter" type="Marker2D" parent="."]
+position = Vector2(149, 0)
+
+[node name="DownSnapCenter" type="Marker2D" parent="."]
+position = Vector2(0, 149)
+
+[node name="LeftSnapCenter" type="Marker2D" parent="."]
+position = Vector2(-149, 0)
+
+[node name="TopSnapCenter" type="Marker2D" parent="."]
+position = Vector2(0, -149)
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

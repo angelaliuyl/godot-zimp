@@ -1,7 +1,7 @@
 extends Node2D
 @export var tile_scene: PackedScene
 
-#section for storing room tile logic
+#TODO read this from a file or from directory
 var indoor_deck = ["bathroom", "bedroom", "diningroom", "eviltemple", 
 					"familyroom", "kitchen", "storage"]
 
@@ -28,6 +28,8 @@ func generate_indoor_tile():
 		indoor_tile.position = $NewTileMarker.position
 		indoor_tile.load_texture(indoor_deck.pop_front())
 		add_child(indoor_tile)
-	else:
+	
+	if indoor_deck.size() <= 0:
 		print("no indoor tiles left")
+		$"HUD/Indoor button".hide()
 

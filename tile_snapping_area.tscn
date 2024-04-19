@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://2royat4fb2n2"]
+
+[ext_resource type="Texture2D" uid="uid://lwqejfd27kg6" path="res://media/UI/new_tile_space.png" id="1_eydbs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8qgb"]
+size = Vector2(593, 593)
+
+[node name="TileSnappingArea" type="StaticBody2D"]
+scale = Vector2(1, 1.051)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q8qgb")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.396078)
+texture = ExtResource("1_eydbs")
