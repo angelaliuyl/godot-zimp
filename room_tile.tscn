@@ -2,18 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://1e2327r8gxeg" path="res://media/tiles/foyer.png" id="1_3enom"]
 [ext_resource type="Script" path="res://room_tile.gd" id="1_hlr76"]
+[ext_resource type="PackedScene" uid="uid://ng27ba3o2qm" path="res://tile_ui.tscn" id="3_ikb75"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8knk0"]
 size = Vector2(149, 148)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aqvs"]
-size = Vector2(26, 144)
 
 [node name="Tile" type="CharacterBody2D"]
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_hlr76")
-metadata/_edit_group_ = true
 
 [node name="TileSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -31,12 +28,10 @@ offset_right = -25.0
 offset_bottom = -41.0
 scale = Vector2(3.12, 4.68)
 
-[node name="RightSnappingArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSnappingArea"]
-position = Vector2(88, 7.62939e-06)
-scale = Vector2(0.996583, 1)
-shape = SubResource("RectangleShape2D_6aqvs")
+[node name="TileUI" parent="." instance=ExtResource("3_ikb75")]
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="mark_done" from="TileUI" to="." method="_on_tile_ui_mark_done"]
+[connection signal="turn_left" from="TileUI" to="." method="_on_tile_ui_turn_left"]
+[connection signal="turn_right" from="TileUI" to="." method="_on_tile_ui_turn_right"]

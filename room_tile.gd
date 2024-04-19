@@ -4,9 +4,7 @@ var dragging = false
 var offset = Vector2.ZERO
 var collision = false
 var right_area_entered = false
-
-var room_name_array = ["bathroom", "bedroom", "diningroom", "eviltemple", 
-					"familyroom", "foyer", "kitchen", "storage"]
+var placed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,7 +19,7 @@ func load_texture(room_name : String):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	velocity = Vector2.ZERO
-	if dragging:
+	if dragging && !placed:
 		var current_position = position
 		var new_position = get_global_mouse_position() - offset
 		
@@ -48,6 +46,16 @@ func _on_button_button_down():
 
 func _on_button_button_up():
 	dragging = false
-	
 
 
+func _on_tile_ui_turn_left():
+	$TileSprite.rotation -= PI / 2
+
+
+func _on_tile_ui_turn_right():
+	$TileSprite.rotation += PI / 2
+
+
+func _on_tile_ui_mark_done():
+	placed = true
+	$TileUI.hide()
