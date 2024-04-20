@@ -1,6 +1,8 @@
 extends Node2D
 @export var tile_scene: PackedScene
 
+var is_placing_tile = false
+
 #TODO read this from a file or from directory
 var indoor_deck = ["bathroom", "bedroom", "diningroom", "eviltemple", 
 					"familyroom", "kitchen", "storage"]
@@ -29,10 +31,16 @@ func generate_indoor_tile():
 		add_child(indoor_tile_generation(indoor_deck.pop_front()))
 	if indoor_deck.size() <= 0:
 		print("no indoor tiles left")
-		$"HUD/Indoor button".hide()
+	$"HUD/Indoor button".hide()
 
 func indoor_tile_generation(tile_name):
 	var indoor_tile = tile_scene.instantiate()
 	indoor_tile.position = $NewTileMarker.position
 	indoor_tile.load_texture(tile_name)
+	indoor_tile.tile_placed.connect(tile_final_placed)
 	return indoor_tile
+	
+func tile_final_placed():
+	$"HUD/Indoor button".show()
+
+#TODO add option to make new doorway when no doorways available

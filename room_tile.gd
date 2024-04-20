@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @export var tile_placement_scene : PackedScene
 
+signal tile_placed
+
 var dragging = false
 var offset = Vector2.ZERO
 var collision = false
@@ -100,22 +102,29 @@ func _on_tile_ui_turn_right():
 	doorway  = _rotate_array_cw(doorway, 1)
 
 func _on_tile_ui_mark_done():
+	#TODO stop being able to place if the doorways don't line up
 	if is_placed_in_spot:
-		placed = true
-		$TileUI.hide()
-		
 		if drop_space_body_ref != null:
-			# set own space to filled corresponding to other tile
+			# first check if the move is valid
 			var own_space = (drop_space_body_ref.pos_direction + 2) % 4
+			if !doorway[own_space]:
+				return
+			
+			# set own space to filled corresponding to other tile
 			doorway[own_space] = false
 			print("Spaces after being placed:")
 			print(doorway)
 			
 			# turn off snapping body
 			drop_space_body_ref.queue_free()
+			
+			tile_placed.emit()
+		
 		# generate tile placement spaces
 		_spawn_tile_snapping_spaces()
 		$CollisionShape2D.set_deferred("disabled", 1)
+		placed = true
+		$TileUI.hide()
 
 func _spawn_tile_snapping_spaces():
 	var placementSpace = tile_placement_scene.instantiate()
@@ -171,6 +180,7 @@ func _on_area_2d_body_exited(body:StaticBody2D):
 		if is_inside_dropable:
 			is_inside_dropable = false
 
+#TODO this might not be needed anymore, consider removing
 func room_tile_placed(pos_dir):
 	doorway[pos_dir] = false
 	var child_nodes = get_children()

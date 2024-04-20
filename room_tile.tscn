@@ -12,13 +12,14 @@ size = Vector2(593, 593)
 size = Vector2(593, 593)
 
 [node name="Tile" type="CharacterBody2D" groups=["draggable"]]
+scale = Vector2(0.8, 0.8)
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_hlr76")
 tile_placement_scene = ExtResource("4_ubyep")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_tile"]]
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_8knk0")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
