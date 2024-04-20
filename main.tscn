@@ -8,6 +8,19 @@
 script = ExtResource("1_4tncw")
 tile_scene = ExtResource("1_6fcyy")
 
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 240.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4.79779, 2.70815)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0, 0.384314, 0, 1)
+
 [node name="StartingTile" parent="." instance=ExtResource("1_6fcyy")]
 
 [node name="HUD" parent="." instance=ExtResource("2_624k5")]

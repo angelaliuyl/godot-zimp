@@ -87,11 +87,16 @@ func _on_button_button_up():
 	dragging = false
 
 func _on_tile_ui_turn_left():
-	$TileSprite.rotation -= PI / 2
+	var tween = get_tree().create_tween()
+	var new_rotation = $TileSprite.rotation - PI / 2
+	tween.tween_property($TileSprite, "rotation", new_rotation, 0.2).set_ease(Tween.EASE_OUT)
 	doorway  = _rotate_array_cw(doorway, -1)
 
 func _on_tile_ui_turn_right():
-	$TileSprite.rotation += PI / 2
+	var tween = get_tree().create_tween()
+	var new_rotation = $TileSprite.rotation + PI / 2
+	tween.tween_property($TileSprite, "rotation", new_rotation, 0.2).set_ease(Tween.EASE_OUT)
+
 	doorway  = _rotate_array_cw(doorway, 1)
 
 func _on_tile_ui_mark_done():
