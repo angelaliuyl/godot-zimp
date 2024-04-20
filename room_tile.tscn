@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://by51q8407v5jq"]
+[gd_scene load_steps=7 format=3 uid="uid://by51q8407v5jq"]
 
 [ext_resource type="Texture2D" uid="uid://1e2327r8gxeg" path="res://media/tiles/foyer.png" id="1_3enom"]
 [ext_resource type="Script" path="res://room_tile.gd" id="1_hlr76"]
@@ -6,9 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://2royat4fb2n2" path="res://tile_snapping_area.tscn" id="4_ubyep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8knk0"]
-size = Vector2(149, 148)
+size = Vector2(593, 593)
 
-[node name="Tile" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7j8f"]
+size = Vector2(593, 593)
+
+[node name="Tile" type="CharacterBody2D" groups=["draggable"]]
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_hlr76")
@@ -16,6 +19,7 @@ tile_placement_scene = ExtResource("4_ubyep")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_8knk0")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
@@ -27,11 +31,11 @@ offset_right = -25.0
 offset_bottom = -41.0
 scale = Vector2(3.12, 4.68)
 
-[node name="TileUI" parent="." instance=ExtResource("3_ikb75")]
-
 [node name="TileSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_3enom")
+
+[node name="TileUI" parent="." instance=ExtResource("3_ikb75")]
 
 [node name="RightSnapCenter" type="Marker2D" parent="."]
 position = Vector2(149, 0)
@@ -45,8 +49,16 @@ position = Vector2(-149, 0)
 [node name="TopSnapCenter" type="Marker2D" parent="."]
 position = Vector2(0, -149)
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_p7j8f")
+
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="mark_done" from="TileUI" to="." method="_on_tile_ui_mark_done"]
 [connection signal="turn_left" from="TileUI" to="." method="_on_tile_ui_turn_left"]
 [connection signal="turn_right" from="TileUI" to="." method="_on_tile_ui_turn_right"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
