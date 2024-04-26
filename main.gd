@@ -10,6 +10,7 @@ var indoor_deck = ["bathroom", "bedroom", "diningroom", "eviltemple",
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_load_starting_tile()
+	$PlayerToken.position = $StartingTileMarker.position
 	
 	# randomise indoor_deck
 	indoor_deck.shuffle()
@@ -29,6 +30,7 @@ func _process(delta):
 func generate_indoor_tile():
 	if indoor_deck.size() > 0:
 		add_child(indoor_tile_generation(indoor_deck.pop_front()))
+		move_child($PlayerToken, -1)
 	if indoor_deck.size() <= 0:
 		print("no indoor tiles left")
 	$"HUD/Indoor button".hide()

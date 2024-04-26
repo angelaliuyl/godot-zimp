@@ -12,7 +12,7 @@ var placed = false
 var room_name_string
 
 var is_inside_dropable
-var drop_space_body_ref
+var drop_space_body_ref_list = []
 var initial_position
 var is_placed_in_spot
 
@@ -57,15 +57,7 @@ func _process(delta):
 			position = new_position
 			
 			offset = get_global_mouse_position() - position
-		elif Input.is_action_just_released("click"):
-			var tween = get_tree().create_tween()
-			var go_to_position
-			if is_inside_dropable:
-				go_to_position = drop_space_body_ref.global_position
-				is_placed_in_spot = true
-			else:
-				go_to_position = initial_position
-			tween.tween_property(self, "position", go_to_position, 0.2).set_ease(Tween.EASE_OUT)
+
 
 func _move_and_slide_alt(currentPosition, newPosition, delta):
 	var distance = currentPosition.distance_to(newPosition)
@@ -87,6 +79,19 @@ func _on_button_button_down():
 
 func _on_button_button_up():
 	dragging = false
+	var tween = get_tree().create_tween()
+	var go_to_position
+	if _is_drop_space_body_ref_saved():
+		print("Inside Dropable")
+		_return_index_of_closest_body()
+		print(drop_space_body_ref_list)
+		go_to_position = drop_space_body_ref_list[0].global_position
+		is_placed_in_spot = true
+	else:
+		print("not inside dropable")
+		go_to_position = initial_position
+	tween.tween_property(self, "position", go_to_position, 0.2).set_ease(Tween.EASE_OUT)
+
 
 func _on_tile_ui_turn_left():
 	var tween = get_tree().create_tween()
@@ -102,11 +107,10 @@ func _on_tile_ui_turn_right():
 	doorway  = _rotate_array_cw(doorway, 1)
 
 func _on_tile_ui_mark_done():
-	#TODO stop being able to place if the doorways don't line up
 	if is_placed_in_spot:
-		if drop_space_body_ref != null:
+		if _is_drop_space_body_ref_saved():
 			# first check if the move is valid
-			var own_space = (drop_space_body_ref.pos_direction + 2) % 4
+			var own_space = (drop_space_body_ref_list[0].pos_direction + 2) % 4
 			if !doorway[own_space]:
 				return
 			
@@ -116,7 +120,7 @@ func _on_tile_ui_mark_done():
 			print(doorway)
 			
 			# turn off snapping body
-			drop_space_body_ref.queue_free()
+			drop_space_body_ref_list[0].queue_free()
 			
 			tile_placed.emit()
 		
@@ -125,6 +129,17 @@ func _on_tile_ui_mark_done():
 		$CollisionShape2D.set_deferred("disabled", 1)
 		placed = true
 		$TileUI.hide()
+
+func _return_index_of_closest_body():
+	# figure out distance from all linked bodies
+	var expectedIndex
+	var minDistance
+	for i in range(drop_space_body_ref_list.size()):
+		var distance = position.distance_to(drop_space_body_ref_list[i].global_position)
+		if minDistance == null || minDistance > distance:
+			minDistance = distance
+			expectedIndex = i
+	drop_space_body_ref_list = [drop_space_body_ref_list[expectedIndex]]
 
 func _spawn_tile_snapping_spaces():
 	var placementSpace = tile_placement_scene.instantiate()
@@ -162,6 +177,9 @@ func _rotate_array_cw(old_array : Array, is_cw : int):
 		new_array[new_index] = old_array[i]
 	return new_array
 
+func _is_drop_space_body_ref_saved():
+	return drop_space_body_ref_list.size() > 0 && drop_space_body_ref_list[0] != null
+
 func _on_area_2d_body_entered(body:StaticBody2D):
 	if body.is_in_group('dropable'):
 		print("entered body")
@@ -169,9 +187,9 @@ func _on_area_2d_body_entered(body:StaticBody2D):
 	
 		if !is_inside_dropable:
 			is_inside_dropable = true
-			drop_space_body_ref = body
-			print("saved new body ref")
-			print(body.position)
+		drop_space_body_ref_list.append(body)
+		print("saved new body ref")
+		print(body.position)
 
 func _on_area_2d_body_exited(body:StaticBody2D):
 	if body.is_in_group('dropable'):
@@ -179,6 +197,9 @@ func _on_area_2d_body_exited(body:StaticBody2D):
 		body.sprite_scale = body.sprite_scale / 1.1
 		if is_inside_dropable:
 			is_inside_dropable = false
+		if _is_drop_space_body_ref_saved():
+			drop_space_body_ref_list.erase(body)
+			print(drop_space_body_ref_list)
 
 #TODO this might not be needed anymore, consider removing
 func room_tile_placed(pos_dir):

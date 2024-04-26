@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://by51q8407v5jq"]
+[gd_scene load_steps=8 format=3 uid="uid://by51q8407v5jq"]
 
 [ext_resource type="Texture2D" uid="uid://1e2327r8gxeg" path="res://media/tiles/foyer.png" id="1_3enom"]
 [ext_resource type="Script" path="res://room_tile.gd" id="1_hlr76"]
@@ -11,6 +11,9 @@ size = Vector2(593, 593)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7j8f"]
 size = Vector2(593, 593)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uuhj0"]
+size = Vector2(590, 590)
+
 [node name="Tile" type="CharacterBody2D" groups=["draggable"]]
 scale = Vector2(0.8, 0.8)
 disable_mode = 1
@@ -19,7 +22,7 @@ script = ExtResource("1_hlr76")
 tile_placement_scene = ExtResource("4_ubyep")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_tile"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_8knk0")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
@@ -55,6 +58,13 @@ position = Vector2(0, -149)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_p7j8f")
+
+[node name="TileStaticBody" type="StaticBody2D" parent="." groups=["player_tile_placement_space"]]
+scale = Vector2(0.25, 0.25)
+
+[node name="TSBCollisionShape2D" type="CollisionShape2D" parent="TileStaticBody"]
+position = Vector2(-1.66893e-05, 0)
+shape = SubResource("RectangleShape2D_uuhj0")
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
