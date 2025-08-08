@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ng27ba3o2qm"]
 
 [ext_resource type="Texture2D" uid="uid://b388c5l6temn6" path="res://media/UI/turn_arrow.png" id="1_5mn77"]
-[ext_resource type="Script" path="res://tile_ui.gd" id="1_kdsxw"]
+[ext_resource type="Script" uid="uid://51oj5x146o3w" path="res://tile_ui.gd" id="1_kdsxw"]
 [ext_resource type="Texture2D" uid="uid://e84j306wqhjv" path="res://media/UI/done.png" id="2_xf5xj"]
 
 [node name="TileUI" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://2royat4fb2n2"]
 
-[ext_resource type="Script" path="res://tile_snapping_area.gd" id="1_d4acx"]
+[ext_resource type="Script" uid="uid://cy1ale8apncxl" path="res://tile_snapping_area.gd" id="1_d4acx"]
 [ext_resource type="Texture2D" uid="uid://lwqejfd27kg6" path="res://media/UI/new_tile_space.png" id="1_eydbs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8qgb"]

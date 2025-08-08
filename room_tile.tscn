@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://by51q8407v5jq"]
 
 [ext_resource type="Texture2D" uid="uid://1e2327r8gxeg" path="res://media/tiles/foyer.png" id="1_3enom"]
-[ext_resource type="Script" path="res://room_tile.gd" id="1_hlr76"]
+[ext_resource type="Script" uid="uid://cysptbivnckfi" path="res://room_tile.gd" id="1_hlr76"]
 [ext_resource type="PackedScene" uid="uid://ng27ba3o2qm" path="res://tile_ui.tscn" id="3_ikb75"]
 [ext_resource type="PackedScene" uid="uid://2royat4fb2n2" path="res://tile_snapping_area.tscn" id="4_ubyep"]
 
